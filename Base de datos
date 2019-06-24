@@ -1,37 +1,3 @@
-DROP DATABASE food_pedidos;
-
-CREATE DATABASE food_pedidos;
-
-USE food_pedidos;
-
-CREATE TABLE usuarios (
-	id_usuario int (10) auto_increment,
-    nombre varchar (50),
-    apellido varchar (50),
-    no_telefonico char (10),
-    tipo_usuario char (1),
-    nombre_usuario varchar (20),
-    contraseña varchar (20),
-    foto_perfil varchar (80),
-    PRIMARY KEY (id_usuario)
-) ;
-
-CREATE TABLE local (
-	id_local int (10) auto_increment,
-    nombre_local varchar (50),
-    foto_logo varchar (50),
-    descripcion varchar (80),
-    id_usuario int (10),
-    PRIMARY KEY (id_local),
-    FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
-);
-
-CREATE TABLE estados (
-	id_estado int (10) auto_increment,
-    estado varchar (20),
-    PRIMARY KEY (id_estado)
-);
-
 CREATE TABLE ingredientes (
 	id_ingrediente int (10) auto_increment,
     nombre varchar (30),
@@ -40,7 +6,7 @@ CREATE TABLE ingredientes (
     id_estado int (10),
     PRIMARY KEY (id_ingrediente),
     FOREIGN KEY (id_local) REFERENCES local (id_local),
-    FOREIGN KEY (id_estado) REFERENCES estado (id_estado)
+    FOREIGN KEY (id_estado) REFERENCES estados (id_estado)
 );
 
 CREATE TABLE platillos ( 
@@ -54,7 +20,7 @@ CREATE TABLE platillos (
     id_estado int (10),
     PRIMARY KEY (id_platillo),
     FOREIGN KEY (id_local) REFERENCES local (id_local),
-    FOREIGN KEY (id_estado) REFERENCES estado (id_estado)
+    FOREIGN KEY (id_estado) REFERENCES estados (id_estado)
 );
 
 CREATE TABLE detalle_platillo (
@@ -76,7 +42,7 @@ CREATE TABLE pedidos (
     PRIMARY KEY (id_pedido),
     FOREIGN KEY (id_local) REFERENCES local (id_local),
     FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
-    FOREIGN KEY (id_estado) REFERENCES estado (id_estado)
+    FOREIGN KEY (id_estado) REFERENCES estados (id_estado)
 );
 
 CREATE TABLE detalle_pedido (
@@ -90,7 +56,7 @@ CREATE TABLE detalle_pedido (
     PRIMARY KEY (id_detalle_pedido),
     FOREIGN KEY (id_platillo) REFERENCES platillos (id_platillo),
     FOREIGN KEY (id_pedido) REFERENCES pedidos (id_pedido),
-    FOREIGN KEY (id_estado) REFERENCES estado (id_estado)
+    FOREIGN KEY (id_estado) REFERENCES estados (id_estado)
 );
 
 CREATE TABLE detalle_ingredientes (
