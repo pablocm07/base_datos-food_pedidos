@@ -1,3 +1,5 @@
+DROP DATABASE food_pedidos;
+
 CREATE DATABASE food_pedidos;
 
 USE food_pedidos;
@@ -24,7 +26,7 @@ CREATE TABLE local (
     FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
 );
 
-CREATE TABLE estado (
+CREATE TABLE estados (
 	id_estado int (10) auto_increment,
     estado varchar (20),
     PRIMARY KEY (id_estado)
@@ -100,3 +102,12 @@ CREATE TABLE detalle_ingredientes (
     FOREIGN KEY (id_ingrediente) REFERENCES ingredientes (id_ingrediente)
 );
 
+Insert into estados (estado) 
+values
+('En existencia'),
+('Agotado'),
+('Activado'),
+('Desactivado'),
+('En espera'),
+('En proceso'),
+('Terminado');
