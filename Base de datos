@@ -19,8 +19,10 @@ CREATE TABLE usuarios (
 CREATE TABLE locales (
     id_local int (10) auto_increment,
     nombre_local varchar (50),
-    foto_logo varchar (50),
+    foto_logo varchar (80),
     descripcion varchar (80),
+    horario_abrir char (5),
+    horario_cerrar char (5),    
     id_usuario int (10),
     PRIMARY KEY (id_local),
     FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
