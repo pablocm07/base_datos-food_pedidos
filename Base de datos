@@ -10,28 +10,31 @@ CREATE TABLE usuarios (
     apellido varchar (50),
     no_telefonico char (10),
     tipo_usuario char (1),
-    nombre_usuario varchar (20),
-    contraseña varchar (20),
+    correo_electronico varchar (70),
+    contrasena varchar (20),
     foto_perfil varchar (80),
     PRIMARY KEY (id_usuario)
 ) ;
-
-CREATE TABLE locales (
-    id_local int (10) auto_increment,
-    nombre_local varchar (50),
-    foto_logo varchar (80),
-    descripcion varchar (80),
-    horario_abrir char (5),
-    horario_cerrar char (5),    
-    id_usuario int (10),
-    PRIMARY KEY (id_local),
-    FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
-);
 
 CREATE TABLE estados (
     id_estado int (10) auto_increment,
     estado varchar (20),
     PRIMARY KEY (id_estado)
+);
+
+CREATE TABLE locales (
+    id_local int (10) auto_increment,
+    nombre_local varchar (50),
+    tipo_local varchar (50),
+    foto_logo varchar (80),
+    descripcion varchar (80),
+    horario_abrir char (5),
+    horario_cerrar char (5),  
+    id_estado int(10), 
+    id_usuario int (10),
+    PRIMARY KEY (id_local),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
+    FOREIGN KEY (id_estado) REFERENCES estados (id_estado)
 );
 
 CREATE TABLE ingredientes (
@@ -146,6 +149,18 @@ values
 ('Desactivado'),
 ('En espera'),
 ('En proceso'),
-('Terminado');
+('Terminado'),
+('Abierto'),
+('Cerrado');
 
-select * from estados;
+INSERT INTO usuarios (nombre, apellido, no_telefonico, tipo_usuario, correo_electronico, contrasena)
+VALUES 
+('Pablo', 'Cruz', '7751463878', '2', 'pablocm1747@gmail.com', '12345678'),
+('Miguel', 'Ortega', '7758765433', '2', 'miguelortega@gmail.com', '87654321');
+
+
+INSERT INTO locales (nombre_local, tipo_local, foto_logo, descripcion, horario_abrir, horario_cerrar, id_estado, id_usuario)
+VALUES 
+('Don andre', 'Cocina Económica', './Assets/img/comida_1.jpg', 'Los mejores desayunos y comidas, antojitos mexicanos y otros ricos alimntos', '08:00', '18:00', 8, 1),
+('Doña Queta', 'Cocina Económica', './Assets/img/comida_2.jpg', 'Los mejores desayunos y comidas, antojitos mexicanos y otros ricos alimntos', '08:00', '18:00', 8, 1),
+('Cafeteria UTEC', 'Cafeteria', './Assets/img/comida_3.jpg', 'Los mejores desayunos y comidas, antojitos mexicanos y otros ricos alimntos', '08:00', '18:00', 8, 1);
