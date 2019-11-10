@@ -12,7 +12,7 @@ CREATE TABLE usuarios (
     tipo_usuario char (1),
     correo_electronico varchar (70),
     contrasena varchar (20),
-    foto_perfil varchar (80),
+    foto_perfil varchar (100),
     PRIMARY KEY (id_usuario)
 ) ;
 
