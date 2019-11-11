@@ -5,15 +5,14 @@ CREATE DATABASE food_pedidos;
 USE food_pedidos;
 
 CREATE TABLE usuarios (
-    id_usuario int (10) auto_increment,
-    nombre varchar (50),
-    apellido varchar (50),
-    no_telefonico char (10),
-    tipo_usuario char (1),
-    correo_electronico varchar (70),
-    contrasena varchar (20),
-    foto_perfil varchar (80),
-    PRIMARY KEY (id_usuario)
+    id_usuario int (10) ZERO_FILL AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    no_telefonico CHAR(10),
+    tipo_usuario CHAR(1),
+    correo_electronico VARCHAR(70),
+    contrasena VARCHAR(20),
+    foto_perfil VARCHAR(100)    
 ) ;
 
 CREATE TABLE estados (
