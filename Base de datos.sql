@@ -4,7 +4,7 @@ CREATE DATABASE food_pedidos;
 
 USE food_pedidos;
 
-CREATE TABLE usuarios (
+CREATE TABLE usuario (
     id_usuario int (10) auto_increment,
     nombre varchar (50),
     apellido varchar (50),
@@ -13,16 +13,35 @@ CREATE TABLE usuarios (
     correo_electronico varchar (70),
     contrasena varchar (20),
     foto_perfil varchar (80),
+    id_estado char(2),
+    FOREIGN KEY (id_estado) REFERENCES usuarios (id_estado)
     PRIMARY KEY (id_usuario)
 ) ;
 
-CREATE TABLE estados (
-    id_estado int (10) auto_increment,
+CREATE TABLE comprobaciones_codigos(
+    id_comprobacion small int(4) auto_increment primary key not null,
+    codigo varchar(20),
+    id_usuario int (10),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
+);
+
+CREATE TABLE tarjeta_usuario(
+    id_tarjeta_usuario small int(4) auto_increment primary key not null,
+    titular varchar(20),
+    no_tarjeta varchar(16),
+    fecha_expiracion char(5),
+    codigo_seguridad char(3),
+    id_usuario int (10),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
+);
+
+CREATE TABLE estado (
+    id_estado char (2) auto_increment,
     estado varchar (20),
     PRIMARY KEY (id_estado)
 );
 
-CREATE TABLE locales (
+CREATE TABLE local (
     id_local int (10) auto_increment,
     nombre_local varchar (50),
     tipo_local varchar (50),
@@ -30,33 +49,33 @@ CREATE TABLE locales (
     descripcion varchar (80),
     horario_abrir char (5),
     horario_cerrar char (5),  
-    id_estado int(10), 
+    id_estado char(2), 
     id_usuario int (10),
     PRIMARY KEY (id_local),
     FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
     FOREIGN KEY (id_estado) REFERENCES estados (id_estado)
 );
 
-CREATE TABLE ingredientes (
-    id_ingrediente int (10) auto_increment,
+CREATE TABLE ingrediente (
+    id_ingrediente int(10) auto_increment,
     nombre varchar (30),
     precio decimal (5,2),
     id_local int (10),
-    id_estado int (10),
+    id_estado char(2),
     PRIMARY KEY (id_ingrediente),
     FOREIGN KEY (id_local) REFERENCES locales (id_local),
     FOREIGN KEY (id_estado) REFERENCES estados (id_estado)
 );
 
-CREATE TABLE platillos ( 
+CREATE TABLE platillo ( 
     id_platillo int (10) auto_increment,
     id_local int (10),
     nombre_platillo varchar (60),
-    precio decimal (5,2),
+    precio decimal(5,2),
     tiempo_preparacion smallint(4),
     cantidad tinyint (2),
     descripcion varchar (80),
-    id_estado int (10),
+    id_estado char(2),
     PRIMARY KEY (id_platillo),
     FOREIGN KEY (id_local) REFERENCES locales (id_local),
     FOREIGN KEY (id_estado) REFERENCES estados (id_estado)
@@ -79,13 +98,13 @@ CREATE TABLE detalle_platillo (
     FOREIGN KEY (id_ingrediente) REFERENCES ingredientes (id_ingrediente)
 );
 
-CREATE TABLE pedidos (
+CREATE TABLE pedido (
     id_pedido int (10) auto_increment,
     id_local int (10),
     id_usuario int (10),
     precio_total decimal (5,2),
     fecha_hora datetime,
-    id_estado int (10),
+    id_estado char(2),
     PRIMARY KEY (id_pedido),
     FOREIGN KEY (id_local) REFERENCES locales (id_local),
     FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
@@ -93,13 +112,13 @@ CREATE TABLE pedidos (
 );
 
 CREATE TABLE detalle_pedido (
-	id_detalle_pedido int (10) auto_increment,
+    id_detalle_pedido int (10) auto_increment,
     id_platillo int (10),
     id_pedido int (10),
     cantidad tinyint (2),
     precio_subtotal decimal (5,2),
     comentarios varchar (80),
-    id_estado int (10),
+    id_estado char(2),
     PRIMARY KEY (id_detalle_pedido),
     FOREIGN KEY (id_platillo) REFERENCES platillos (id_platillo),
     FOREIGN KEY (id_pedido) REFERENCES pedidos (id_pedido),
@@ -107,7 +126,7 @@ CREATE TABLE detalle_pedido (
 );
 
 CREATE TABLE detalle_ingredientes (
-	id_detalle_ingrediente int (10) auto_increment,
+    id_detalle_ingrediente int (10) auto_increment,
     id_detalle_pedido int (10),
     id_ingrediente int (10),
     PRIMARY KEY (id_detalle_ingrediente),
@@ -138,7 +157,7 @@ CREATE TABLE valoracion_local (
 );
 
 CREATE TABLE errores (
-	id_error int(10) auto_increment not null,
+    id_error int(10) auto_increment not null,
     descripcion varchar (150) null,
     fecha datetime,
     vista varchar(30),
